@@ -9,6 +9,8 @@ import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 @Getter
 @Setter
@@ -20,6 +22,9 @@ public class IdeaService {
     private IdeaRepository ideaRepository;
 
     public void vote(Long id) {
-
+        Optional<Idea> ideaOptional = ideaRepository.findById(id);
+        Idea idea = ideaOptional.get();
+        idea.setVotes(idea.getVotes() + 1);
+        ideaRepository.save(idea);
     }
 }

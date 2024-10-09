@@ -2,6 +2,7 @@ package com.example.Brainstoming.Ideas.controller;
 
 import com.example.Brainstoming.Ideas.model.idea.Idea;
 import com.example.Brainstoming.Ideas.repository.IdeaRepository;
+import com.example.Brainstoming.Ideas.service.IdeaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -16,11 +17,11 @@ import java.util.Optional;
 public class IdeaController {
 
     @Autowired
-    private IdeaRepository ideaRepository;
+    private IdeaService ideaService;
 
     @PostMapping("/{id}/vote")
     public ResponseEntity<Idea> vote(@PathVariable Long id) {
-        Optional<Idea> ideaOptional = ideaRepository.findById(id);
+        ideaService.vote(id);
         return ResponseEntity.ok().build();
     }
 }
