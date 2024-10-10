@@ -18,9 +18,5 @@ public class WebSocketService {
     @Autowired
     private SessionRepository sessionRepository;
 
-    public void saveIdea(Idea idea, Long sessionId) {
-        Optional<Session> sessionOptional = sessionRepository.findById(sessionId);
-        idea.setSession(sessionOptional.get());
-        Idea savedIdea = ideaRepository.save(idea);
-    }
+
 }

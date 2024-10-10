@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>STOMP WebSocket Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .log {
+            border: 1px solid #ccc;
+            padding: 10px;
+            height: 200px;
+            overflow-y: scroll;
+            margin-bottom: 10px;
+        }
+        input {
+            margin-bottom: 10px;
+            width: 100%;
+            padding: 8px;
+            box-sizing: border-box;
+        }
+        button {
+            padding: 8px 12px;
+        }
+    </style>
+</head>
+<body>
+
+<h1>STOMP WebSocket Test</h1>
+
+<div>
+    <label for="messageInput">Message:</label>
+    <input type="text" id="messageInput" placeholder="Enter your message">
+    <button onclick="sendMessage()">Send Message</button>
+</div>
+
+<div class="log" id="log">
+    <p><strong>Logs:</strong></p>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.5.1/sockjs.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+
+<script>
+    var socket;
+    var stompClient;
+    var logDiv = document.getElementById('log');
+
+    // Conectar ao WebSocket via STOMP quando a página carregar
+    window.onload = function() {
+        connectWebSocket();
+    };
+
+    function connectWebSocket() {
+        // Conectar via SockJS (STOMP sobre WebSocket)
+        socket = new SockJS('http://localhost:8080/ws');
+        stompClient = Stomp.over(socket);
+
+        // Conectar ao STOMP
+        stompClient.connect({}, function(frame) {
+            log('Connected: ' + frame);
+
+            // Assinar o tópico para receber mensagens (substitua pelo seu tópico)
+            stompClient.subscribe('/topic/ideas', function(messageOutput) {
+                log('Message from server: ' + messageOutput.body);
+            });
+        }, function(error) {
+            log('STOMP error: ' + error);
+        });
+    }
+
+    // Enviar mensagem via STOMP
+    function sendMessage() {
+        var message = document.getElementById('messageInput').value;
+        var idea = {
+            content: message,
+            sessionId: 1 // Substitua com o ID correto da sessão
+        };
+
+        // Enviar a mensagem para o destino correto no servidor
+        stompClient.send("/app/idea", {}, JSON.stringify(idea));
+        log('Message sent: ' + JSON.stringify(idea));
+    }
+
+    // Logar mensagens no div de logs
+    function log(message) {
+        var p = document.createElement('p');
+        p.textContent = message;
+        logDiv.appendChild(p);
+        logDiv.scrollTop = logDiv.scrollHeight;
+    }
+</script>
+
+</body>
+</html>
