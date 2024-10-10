@@ -24,6 +24,9 @@ public class IdeaService {
     public void vote(Long id) {
         Optional<Idea> ideaOptional = ideaRepository.findById(id);
         Idea idea = ideaOptional.get();
+        if (idea.getVotes() == null) {
+            idea.setVotes(0);  // Define para 0 se for nulo
+        }
         idea.setVotes(idea.getVotes() + 1);
         ideaRepository.save(idea);
     }

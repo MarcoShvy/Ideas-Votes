@@ -29,7 +29,8 @@ public class WebSocketController {
     // Envia a mensagem de volta para todos os clientes inscritos no tópico /topic/ideas/{sessionId}
     @SendTo("/topic/ideas")
     public Idea sendIdea(Idea idea ) {
-
+        Session session = sessionRepository.findAllById(idea.getSession());
+        idea.setSession(session);
         Idea savedIdea = ideaRepository.save(idea);
         return savedIdea;
     }

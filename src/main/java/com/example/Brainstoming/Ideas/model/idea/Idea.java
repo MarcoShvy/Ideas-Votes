@@ -20,9 +20,13 @@ public class Idea {
 
     private String content;
 
-    private Integer votes;
+    private Integer votes = 0;
 
     @ManyToOne
     @JoinColumn(name = "session_id")
     private Session session;
+
+    public Integer getVotes() {
+        return votes;
+    }
 }
