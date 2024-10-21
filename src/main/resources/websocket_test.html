@@ -76,10 +76,11 @@
         var message = document.getElementById('messageInput').value;
         var idea = {
             content: message,
-            sessionId: 1 // Substitua com o ID correto da sessão
+            sessionId : 1
         };
 
         // Enviar a mensagem para o destino correto no servidor
+        console.log(JSON.stringify(idea));
         stompClient.send("/app/idea", {}, JSON.stringify(idea));
         log('Message sent: ' + JSON.stringify(idea));
     }
