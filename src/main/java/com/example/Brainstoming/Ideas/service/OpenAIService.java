@@ -10,7 +10,7 @@ import java.util.Map;
 public class OpenAIService {
     private final RestTemplate restTemplate;
     private final String API_URL = "https://api.openai.com/v1/completions";
-    private final String API_KEY = "sk-9xXLAS7-CSAPiFIkU7tUslGYAuUBrrMIbW-rNLfO9pT3BlbkFJz4Z6fwU0opZwaFneVxDPVPLA4tcFz_6RfzK4-9K9YA";
+    private final String API_KEY = "";
 
     public OpenAIService(RestTemplate restTemplate) {
         this.restTemplate = restTemplate;
