@@ -23,8 +23,8 @@ public class WebSocketController {
     @MessageMapping("/idea")
     // Envia a mensagem de volta para todos os clientes inscritos no tópico /topic/ideas/{sessionId}
     @SendTo("/topic/ideas")
-    public Idea sendIdea(Idea idea){
+    public String sendIdea(Idea idea){
         Idea savedIdea = ideaRepository.save(idea);
-        return savedIdea;
+        return savedIdea.getContent() + "Votes: " + savedIdea.getVotes();
     }
 }
