@@ -21,7 +21,6 @@ public class WebSocketController {
 
     // Recebe a mensagem no destino /app/idea/{sessionId}
     @MessageMapping("/idea")
-    // Envia a mensagem de volta para todos os clientes inscritos no tópico /topic/ideas/{sessionId}
     @SendTo("/topic/ideas")
     public String sendIdea(Idea idea){
         Idea savedIdea = ideaRepository.save(idea);
