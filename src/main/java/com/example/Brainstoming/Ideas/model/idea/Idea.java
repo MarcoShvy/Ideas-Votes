@@ -21,6 +21,8 @@ public class Idea {
 
     private Integer votes = 0;
 
+    public String improvedIdea;
+
     public Integer getVotes() {
         return votes;
     }
