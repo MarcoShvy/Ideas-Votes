@@ -67,6 +67,10 @@ public class OpenAIService {
 
         String improvedIdeas = sendToGPT(prompt);
 
-        ideaRepository.save();
+        for (Idea idea : ideas) {
+            idea.setImprovedIdea(improvedIdeas);
+            ideaRepository.save(idea);
+        }
+
     }
 }
