@@ -42,10 +42,10 @@ public class IdeaController {
         return null;
     }
 
-    @PostMapping("/generate-ia")
-    public ResponseEntity<String> generateResponse(@RequestBody Map<String, String> request) {
-        String prompt = request.get("prompt");
-        String response = openAIService.getChatGPTResponse(prompt);
+    @PostMapping("/generate-ia/{id}")
+    public ResponseEntity<String> generateResponse(@PathVariable("/{id}") Idea idea) {
+        String prompt = idea.getContent();
+        String response = openAIService.sendToGPT(prompt);
         return ResponseEntity.ok(response);
     }
 }
